@@ -18,8 +18,8 @@ script:
   - cmake --build . --target package
 
 after_script:
-  - ls -la
-  - ./ip_filter
+#  - ls -la
+#  - ./ip_filter
 
 deploy:
   provider:  script
