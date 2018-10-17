@@ -5,7 +5,7 @@
 #include <list>
 #include <tuple>
 #include <vector>
-
+#include "lib.h"
 using namespace std;
 
 unsigned int bytes_to_int( unsigned char &b0, unsigned char &b1, unsigned char &b2, unsigned char &b3 ) {

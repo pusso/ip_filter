@@ -1,0 +1,28 @@
+language: cpp
+compiler: clang
+
+os: linux
+addons:
+  apt:
+    update: true
+before_script:
+  - sudo apt install libboost-test-dev -y
+  - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list.d/xenial.list
+  - sudo apt update
+  - sudo apt install libspdlog-dev -y
+
+script:
+  - cmake .
+  - cmake --build .
+  - cmake --build . --target test_main_cli
+  - cmake --build . --target package
+
+after_script:
+  - ls -la
+  - ./ip_filter
+
+deploy:
+  provider:  script
+  skip_cleanup: true
+  script:
+    - curl -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb   -upusso:$BINTRAY_API_KEY "https://api.bintray.com/content/pusso/victim-of-learn/logs/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
